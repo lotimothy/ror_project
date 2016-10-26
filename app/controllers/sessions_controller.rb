@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
       end
     else
       flash[:error] = "No user found"
-      redirect_to "/sessions/login"
+      redirect_to :back
     end
   end
 

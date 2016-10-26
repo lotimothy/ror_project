@@ -21,6 +21,10 @@ $(document).ready(function () {
     var items = 1;
     $("#newevent").click(function () {
         items++;
-        $("#newevent").append("<div class='row'><div class='input-field col s8'><input name='item_name[" + items + "]' placeholder='' type='text'><label>Item needed:</label></div><div class='input-field col s4'><input name='item_quantity[" + items + "]' placeholder='' type='text'><label>Quantity needed:</label></div></div>")
+        $("#newevent").append("<div class='row'><div class='input-field col s8'><input name='item_name[" + items + "]' type='text'><label class='active'>Item needed</label></div><div class='input-field col s4'><input name='item_quantity[" + items + "]' type='text'><label class='active'>Quantity</label></div></div>")
+    });
+    $("#addrow").click(function () {
+        items++;
+        $("#newevent").append("<div class='row'><div class='input-field col s8'><input name='item_name[" + items + "]' type='text'><label class='active'>Item needed</label></div><div class='input-field col s4'><input name='item_quantity[" + items + "]' type='text'><label class='active'>Quantity</label></div></div>")
     });
 });

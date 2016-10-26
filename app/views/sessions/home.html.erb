@@ -1,9 +1,96 @@
-<div class="row center-align">
-  <p>
-    <a href="/sessions/login" class="waves-effect waves-light btn-large #0d47a1 blue darken-4">Registered User Login</a>
-  </p>
-  <p><a href="/parents/new" class="waves-effect waves-light btn-large #0d47a1 blue darken-4">New Parent Registration</a>
-  </p>
-  <p><a href="/teachers/new" class="waves-effect waves-light btn-large #0d47a1 blue darken-4">New Teacher
-    Registration</a></p>
-</div>
+<ul class="collapsible" data-collapsible="accordion">
+
+  <!--REGISTERED USER LOGIN-->
+  <li>
+    <div class="collapsible-header center-align
+      <% if flash[:error] %>active
+      <% end %>">Registered User Login
+    </div>
+    <div class="collapsible-body" style="padding:10px;">
+
+      <form action="/logging_in" method="post">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <div class="input-field">
+          <input type="text" name="email">
+          <label>Email</label>
+        </div>
+        <div class="input-field">
+          <input type="password" name="password">
+          <label>Password</label>
+        </div>
+        <button class="waves-effect waves-light btn #0d47a1 blue darken-4" type="submit">Login</button>
+      </form>
+      <p><%= flash[:error] %></p>
+    </div>
+  </li>
+
+  <!--NEW PARENT REGISTRATION-->
+  <li>
+    <div class="collapsible-header center-align <% if flash[:parent_errors] %>active
+      <% end %>">New Parent Registration</div>
+    <div class="collapsible-body" style="padding:10px;">
+
+      <form action="/parents" method="post">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <div class="input-field">
+          <input type="text" name="parent[name]">
+          <label>Name</label>
+        </div>
+        <div class="input-field">
+          <input type="text" name="parent[email]">
+          <label>Email</label>
+        </div>
+        <div class="input-field">
+          <input type="password" name="parent[password]">
+          <label>Password</label>
+        </div>
+        <div class="input-field">
+          <input type="password" name="parent[password_confirmation]">
+          <label>Confirm Password</label>
+        </div>
+        <button class="waves-effect waves-light btn #0d47a1 blue darken-4" type="submit">Register</button>
+      </form>
+      <% if flash[:parent_errors] %>
+          <% flash[:parent_errors].each do |error| %>
+              <%= error %><br>
+          <% end %>
+      <% end %>
+
+    </div>
+  </li>
+
+  <!--NEW TEACHER REGISTRATION-->
+  <li>
+    <div class="collapsible-header center-align <% if flash[:teacher_errors] %>active
+      <% end %>">New Teacher Registration</div>
+    <div class="collapsible-body" style="padding:10px;">
+
+      <form action="/teachers" method="post">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <div class="input-field">
+          <input type="text" name="teacher[name]">
+          <label>Name</label>
+        </div>
+        <div class="input-field">
+          <input type="text" name="teacher[email]">
+          <label>Email</label>
+        </div>
+        <div class="input-field">
+          <input type="password" name="teacher[password]">
+          <label>Password</label>
+        </div>
+        <div class="input-field">
+          <input type="password" name="teacher[password_confirmation]">
+          <label>Confirm Password</label>
+        </div>
+        <button class="waves-effect waves-light btn #0d47a1 blue darken-4" type="submit">Register</button>
+      </form>
+      <% if flash[:teacher_errors] %>
+          <% flash[:teacher_errors].each do |error| %>
+              <%= error %><br>
+          <% end %>
+      <% end %>
+
+    </div>
+  </li>
+</ul>

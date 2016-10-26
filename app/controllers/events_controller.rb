@@ -1,8 +1,8 @@
 class EventsController < ApplicationController
 
   def index
-    @events = Event.all.order(:date)
-    @resources = Resource.all
+    @teacherview = Event.teacher_view
+    @parentview = Event.parent_view(session[:parent_id])
   end
 
   def new
@@ -12,7 +12,9 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
     if @event.save
       params["resource"].each do |item, count|
-        Resource.create(event_id: @event.id, name: item, quantity: count)
+        if count.to_i > 0
+          Resource.create(event_id: @event.id, name: item, quantity: count)
+        end
       end
       params["item_name"].each do |item, count|
         @resource = Resource.create(event_id: @event.id, name: params["item_name"][item], quantity: params["item_quantity"][item])
@@ -28,7 +30,6 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @donations = Resource.select("resources.id AS id, resources.name AS name, resources.quantity AS r_quantity, donations.parent_id AS p_id, donations.quantity AS p_quantity").joins("LEFT OUTER JOIN donations ON resources.id = donations.resource_id").where("event_id = ?", @event.id).where("p_id = ? OR p_id IS NULL", session[:parent_id])
     @teacherview = Resource.select("resources.id AS id, resources.name AS name, resources.quantity AS total, SUM(donations.quantity) AS sofar").joins("LEFT OUTER JOIN donations ON resources.id = donations.resource_id").where("event_id = ?", @event.id).group("id")
-
   end
 
   def update
@@ -47,5 +48,3 @@ class EventsController < ApplicationController
     params.require(:event).permit(:name, :date, :teacher_id)
   end
 end
-
-

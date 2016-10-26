@@ -1,23 +1,142 @@
-<div class="row"><h4>Upcoming Events</h4></div>
-
-<ul class="collection">
-  <% @events.each do |event| %>
-      <a href="/events/<%= event.id %>/edit"><li class="collection-item avatar">
-        <!--<img src="" alt="" class="circle">-->
-        <%= event.date.to_time.strftime("%B %d, %Y") %>:
-        <span class="title"><%= event.name %></span>
-        <!--<div class="secondary-content">-->
-          <!--<a href="#"><%= image_tag "chaperone.png", class: "optional_class" %></a>-->
-          <!--<a href="#"><%= image_tag "car.png", class: "optional_class" %></a>-->
-          <!--<a href="#"><%= image_tag "food.png", class: "optional_class" %></a>-->
-          <!--<a href="#"><%= image_tag "drink.png", class: "optional_class" %></a>-->
-        <!--</div>-->
-      </li></a>
-  <% end %>
-</ul>
-
+<!--TEACHER PAGE-->
 <% if session[:teacher_id] %>
-    <form action="/events/new" method="get">
-      <button class="waves-effect waves-light btn #0d47a1 blue darken-4" type="submit">Add new event</button>
-    </form>
+    <ul class="collapsible popout" data-collapsible="accordion">
+
+      <!--VIEW ALL EVENTS-->
+      <% @teacherview.each do |item| %>
+          <li>
+            <div class="collapsible-header"><%= item[:event].date.to_time.strftime("%B %d, %Y") %>:
+              <span class="title"><%= item[:event].name %></span></div>
+            <div class="collapsible-body">
+              <div>
+                <table class="centered highlight bordered">
+                  <thead>
+                  <tr>
+                    <th data-field="item">Item</th>
+                    <th data-field="requested">Requested</th>
+                    <th data-field="status">Status</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% item[:resources].each do |thing| %>
+                      <tr>
+                        <td><%= thing[:info].name %></td>
+                        <td><%= thing[:info].quantity %></td>
+                        <td><%= thing[:sum] %></td>
+                      </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </li>
+      <% end %>
+
+      <!--ADD NEW EVENT-->
+      <li>
+        <div class="collapsible-header
+          <% if flash[:errors] %>active
+      <% end %>">ADD A NEW EVENT
+        </div>
+        <div class="collapsible-body" style="padding:10px;">
+          <form method="post" action="/events">
+            <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+            <input type="hidden" name="event[teacher_id]" value="<%= session[:teacher_id] %>">
+            <div class="row">
+              <div class="input-field col s6">
+                <input name="event[name]" type="text">
+                <label class="active">Name of event</label>
+              </div>
+              <div class="input-field col s6">
+                <input type="date" name="event[date]" class="datepicker">
+                <label class="active">Date</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <input name="resource[Chaperones]" type="text">
+                <label class="active">Chaperones needed</label>
+              </div>
+              <div class="input-field col s6">
+                <input name="resource[Rides]" type="text">
+                <label class="active">Rides needed</label>
+              </div>
+            </div>
+            <div id="newevent">
+              <div class="row">
+                <div class="input-field col s8">
+                  <input name="item_name[1]" type="text">
+                  <label class="active">Item needed</label>
+                </div>
+                <div class="input-field col s4">
+                  <input name="item_quantity[1]" type="text">
+                  <label class="active">Quantity</label>
+                </div>
+              </div>
+            </div>
+            <div class="row right-align" style="padding-right:20px;">
+              <button class="waves-effect waves-light btn #0d47a1 blue darken-4" type="submit" name="action">Add Event
+              </button>
+            </div>
+          </form>
+          <!--<div class="row left-align" style="padding-left:20px;">-->
+          <!--<button class="waves-effect waves-light btn #0d47a1 green darken-4" id="addrow">I need more rows</button>-->
+          <!--</div>-->
+          <% if flash[:errors] %>
+              <% flash[:errors].each do |error| %>
+                  <%= error %><br>
+              <% end %>
+          <% end %>
+        </div>
+        </div>
+      </li>
+
+    </ul>
+
+    <!--PARENT PAGE-->
+<% else %>
+    <ul class="collapsible popout" data-collapsible="accordion">
+      <% @parentview.each do |item| %>
+          <li>
+            <div class="collapsible-header"><%= item[:event].date.to_time.strftime("%B %d, %Y") %>:
+              <span class="title"><%= item[:event].name %></span></div>
+            <div class="collapsible-body">
+
+              <form method="post" action="/events/<%= session[:parent_id] %>">
+                <input name="_method" value="patch" type="hidden">
+                <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+                <div>
+                  <table class="centered highlight bordered">
+                    <thead>
+                    <tr>
+                      <th data-field="id">Item</th>
+                      <th data-field="name">Total needed</th>
+                      <th data-field="price">You're bringing</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% item[:resources].each do |thing| %>
+                        <tr>
+                          <td><%= thing[:info].name %></td>
+                          <td><%= thing[:info].quantity %></td>
+                          <td>
+                            <div class="input-field">
+                              <input class="center-align" name="[item]<%= thing[:info].id %>" value="<%= thing[:quantity] %>" type="text" style="width:25%">
+                            </div>
+                          </td>
+                        </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="row right-align" style="padding-right:20px;">
+                  <button class="waves-effect waves-light btn #0d47a1 blue darken-4" type="submit" name="action">Update
+                  </button>
+                </div>
+              </form>
+            </div>
+          </li>
+      <% end %>
+
+    </ul>
 <% end %>
