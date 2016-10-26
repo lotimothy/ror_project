@@ -1,0 +1,75 @@
+<div class="row"><h4><%= @event.name %></h4></div>
+
+<% if session[:parent_id] %>
+    <form method="post" action="/events/<%= @event.id %>">
+      <input name="_method" value="patch" type="hidden">
+      <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+      <div class="row">
+        <h5>Things needed:</h5>
+      </div>
+      <div>
+        <table class="centered highlight bordered">
+          <thead>
+          <tr>
+            <th data-field="id">Item</th>
+            <th data-field="name">Total needed</th>
+            <th data-field="price">You're bringing</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @donations.each do |need| %>
+              <tr>
+                <td><%= need.name %></td>
+                <td><%= need.r_quantity %></td>
+                <td>
+                  <div class="input-field">
+                    <input class="center-align" name="[item]<%= need.id %>" value="<%= need.p_quantity %>" type="text" style="width:25%">
+                  </div>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="row right-align">
+        <button class="waves-effect waves-light btn #0d47a1 blue darken-4" type="submit" name="action">Update quantities
+        </button>
+      </div>
+    </form>
+
+<% else %>
+
+    <div class="row">
+      <h5>Status:</h5>
+    </div>
+    <div>
+      <table class="centered highlight bordered">
+        <thead>
+        <tr>
+          <th data-field="id">Item</th>
+          <th data-field="name">Total needed</th>
+          <th data-field="price">Quantity supplied</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @teacherview.each do |need| %>
+            <tr>
+              <td><%= need.name %></td>
+              <td><%= need.total %></td>
+              <td><%= need.sofar %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+<% end %>
+
+<div>
+  <form class="" method="get" action="/events/index">
+    <div class="row right-align">
+      <button class="waves-effect waves-light btn #0d47a1 red darken-4">Go back
+      </button>
+    </div>
+  </form>
+</div>

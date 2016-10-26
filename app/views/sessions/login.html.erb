@@ -1,0 +1,16 @@
+<div class="row"><h4>Existing User Login</h4></div>
+
+<form action="/logging_in" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <div class="input-field">
+    <input type="text" name="email">
+    <label>Email</label>
+  </div>
+  <div class="input-field">
+    <input type="password" name="password">
+    <label>Password</label>
+  </div>
+  <button class="waves-effect waves-light btn #0d47a1 blue darken-4" type="submit">Login</button>
+</form>
+<p><a href="/">Go back</a></p>
+<p><%= flash[:error] %></p>

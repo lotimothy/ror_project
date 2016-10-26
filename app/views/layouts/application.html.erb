@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Classevents</title>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<% if session[:teacher_id] || session[:parent_id] %>
+<nav>
+  <div class="nav-wrapper #0d47a1 blue darken-4">
+    <a href="#" class="brand-logo"></a>
+    <ul id="nav-mobile" class="right">
+      <li><a href="/sessions" data-method="delete">Logout</a></li>
+    </ul>
+  </div>
+</nav>
+<% end %>
+
+<div class="container">
+
+  <%= yield %>
+
+</div>
+</body>
+</html>

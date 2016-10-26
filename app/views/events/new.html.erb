@@ -1,0 +1,64 @@
+<div class="row"><h4>Add a new event</h4></div>
+
+<form class="" method="post" action="/events">
+  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+  <input type="hidden" name="event[teacher_id]" value="<%= session[:teacher_id] %>">
+  <div class="row">
+    <div class="input-field">
+      <input placeholder="" name="event[name]" type="text" class="validate">
+      <label class="active" for="name">Name</label>
+    </div>
+    <div class="input-field">
+      <input type="date" name="event[date]" class="datepicker">
+      <label class="active" for="date">Date</label>
+    </div>
+  </div>
+  <div class="row">
+    <h5>Things needed:</h5>
+  </div>
+  <div class="row">
+    <div class="input-field col s6">
+      <input placeholder="adults required" name="resource[Chaperones]" type="text">
+      <label>Chaperones needed:</label>
+    </div>
+    <div class="input-field col s6">
+      <input placeholder="for students" name="resource[Rides]" type="text">
+      <label>Rides needed:</label>
+    </div>
+  </div>
+
+  <div id="newevent">
+    <div class="row">
+      <div class="input-field col s8">
+        <input name="item_name[1]" placeholder="" type="text">
+        <label>Item needed:</label>
+      </div>
+      <div class="input-field col s4">
+        <input name="item_quantity[1]" placeholder="" type="text">
+        <label>Quantity needed:</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <button class="waves-effect waves-light btn #0d47a1 blue darken-4" type="submit" name="action">Add Event
+    </button>
+  </div>
+</form>
+
+<!--<div class="row">-->
+  <!--<button class="waves-effect waves-light btn #0d47a1 green darken-4" id="add">I need more rows</button>-->
+<!--</div>-->
+
+<form class="" method="get" action="/events/index">
+  <div class="row">
+    <button class="waves-effect waves-light btn #0d47a1 red darken-4" type="submit">Nevermind, go back
+    </button>
+  </div>
+</form>
+
+<% if flash[:errors] %>
+    <% flash[:errors].each do |error| %>
+        <p><%= error %></p>
+    <% end %>
+<% end %>

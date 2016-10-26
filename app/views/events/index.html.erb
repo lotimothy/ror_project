@@ -1,0 +1,23 @@
+<div class="row"><h4>Upcoming Events</h4></div>
+
+<ul class="collection">
+  <% @events.each do |event| %>
+      <a href="/events/<%= event.id %>/edit"><li class="collection-item avatar">
+        <!--<img src="" alt="" class="circle">-->
+        <%= event.date.to_time.strftime("%B %d, %Y") %>:
+        <span class="title"><%= event.name %></span>
+        <!--<div class="secondary-content">-->
+          <!--<a href="#"><%= image_tag "chaperone.png", class: "optional_class" %></a>-->
+          <!--<a href="#"><%= image_tag "car.png", class: "optional_class" %></a>-->
+          <!--<a href="#"><%= image_tag "food.png", class: "optional_class" %></a>-->
+          <!--<a href="#"><%= image_tag "drink.png", class: "optional_class" %></a>-->
+        <!--</div>-->
+      </li></a>
+  <% end %>
+</ul>
+
+<% if session[:teacher_id] %>
+    <form action="/events/new" method="get">
+      <button class="waves-effect waves-light btn #0d47a1 blue darken-4" type="submit">Add new event</button>
+    </form>
+<% end %>

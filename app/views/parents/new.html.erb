@@ -1,0 +1,29 @@
+<div class="row"><h4>New Parent Registration</h4></div>
+
+<form action="/parents" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <div class="input-field">
+    <input type="text" name="parent[name]">
+    <label>Name</label>
+  </div>
+  <div class="input-field">
+    <input type="text" name="parent[email]">
+    <label>Email</label>
+  </div>
+  <div class="input-field">
+    <input type="password" name="parent[password]">
+    <label>Password</label>
+  </div>
+  <div class="input-field">
+    <input type="password" name="parent[password_confirmation]">
+    <label>Confirm Password</label>
+  </div>
+  <button class="waves-effect waves-light btn #0d47a1 blue darken-4" type="submit">Register</button>
+</form>
+<p><a href="/">Go back</a></p>
+<% if flash[:parent_errors] %>
+    <% flash[:parent_errors].each do |error| %>
+        <%= error %><br>
+    <% end %>
+<% end %>
+

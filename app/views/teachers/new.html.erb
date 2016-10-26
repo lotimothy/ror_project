@@ -1,0 +1,28 @@
+<div class="row"><h4>New Teacher Registration</h4></div>
+
+<form action="/teachers" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <div class="input-field">
+    <input type="text" name="teacher[name]">
+    <label>Name</label>
+  </div>
+  <div class="input-field">
+    <input type="text" name="teacher[email]">
+    <label>Email</label>
+  </div>
+  <div class="input-field">
+    <input type="password" name="teacher[password]">
+    <label>Password</label>
+  </div>
+  <div class="input-field">
+    <input type="password" name="teacher[password_confirmation]">
+    <label>Confirm Password</label>
+  </div>
+  <button class="waves-effect waves-light btn #0d47a1 blue darken-4" type="submit">Register</button>
+</form>
+<p><a href="/">Go back</a></p>
+<% if flash[:teacher_errors] %>
+    <% flash[:teacher_errors].each do |error| %>
+        <%= error %><br>
+    <% end %>
+<% end %>
