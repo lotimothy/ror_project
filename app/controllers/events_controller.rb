@@ -17,7 +17,9 @@ class EventsController < ApplicationController
         end
       end
       params["item_name"].each do |item, count|
-        @resource = Resource.create(event_id: @event.id, name: params["item_name"][item], quantity: params["item_quantity"][item])
+        if params["item_quantity"][item].to_i > 0
+          @resource = Resource.create(event_id: @event.id, name: params["item_name"][item], quantity: params["item_quantity"][item])
+        end
       end
       redirect_to "/events/index"
     else
