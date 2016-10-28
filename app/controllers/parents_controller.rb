@@ -6,7 +6,7 @@ class ParentsController < ApplicationController
   def create
     parent = Parent.create(parent_params)
     if parent.save
-      session[:parents_id] = parent.id
+      session[:parent_id] = parent.id
       redirect_to "/events/index"
     else
       flash[:parent_errors] = parent.errors.full_messages

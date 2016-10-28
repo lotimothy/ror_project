@@ -46,7 +46,7 @@ end
 gem 'bcrypt', '~> 3.1.7'
 gem 'paperclip', '~> 4.2'
 
-# gem 'rails-footnotes', '>= 4.0.0'
+gem 'rails-footnotes', '>= 4.0.0'
 
 gem 'hirb', '~> 0.7.3'
 gem 'autoprefixer-rails', '~> 6.5'
@@ -58,10 +58,10 @@ gem 'koala', '1.10.0'
 group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
+  gem 'database_cleaner'
   gem 'capybara'
   gem 'selenium-webdriver', '~> 2.48'
 end
 
 gem 'web-console', '~> 2.0', group: :development
-
 gem 'nokogiri', '~> 1.6.8.1'

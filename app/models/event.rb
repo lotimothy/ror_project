@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  belongs_to :teacher
+  belongs_to :teacher, dependent: :destroy
   has_many :resources
   has_many :donations, :through => :resources
 
@@ -34,6 +34,7 @@ class Event < ActiveRecord::Base
       event.resources.each do |resource|
         resource_item = {}
         resource_item[:info] = resource
+        resource_item[:sum] = Donation.where(resource_id: resource.id).sum(:quantity)
         tentative = Donation.where(resource_id: resource.id).where("parent_id = ?", pid).first
         if tentative
           resource_item[:quantity] = tentative.quantity

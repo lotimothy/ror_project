@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Classevents</title>
+  <title>Class Events Tracker</title>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<nav>
+<nav style="height: 130px;">
   <div class="nav-wrapper #0d47a1 blue darken-4">
-    <a class="brand-logo">The Meadowbrook School</a>
+    <a href="/sessions" data-method="delete" class="brand-logo"><%= image_tag("int-logo.png", :alt => "rss feed") %></a>
     <ul id="nav-mobile" class="right">
       <% if session[:teacher_id] || session[:parent_id] %>
           <li><a href="/sessions" data-method="delete">Logout</a></li>

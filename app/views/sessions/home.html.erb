@@ -26,8 +26,10 @@
 
   <!--NEW PARENT REGISTRATION-->
   <li>
-    <div class="collapsible-header center-align <% if flash[:parent_errors] %>active
-      <% end %>">New Parent Registration</div>
+    <div class="collapsible-header center-align
+      <% if flash[:parent_errors] %>active
+      <% end %>">New Parent Registration
+    </div>
     <div class="collapsible-body" style="padding:10px;">
 
       <form action="/parents" method="post">
@@ -48,7 +50,7 @@
           <input type="password" name="parent[password_confirmation]">
           <label>Confirm Password</label>
         </div>
-        <button class="waves-effect waves-light btn #0d47a1 blue darken-4" type="submit">Register</button>
+        <button class="waves-effect waves-light btn #0d47a1 blue darken-4" type="submit" id="parent_register">Register</button>
       </form>
       <% if flash[:parent_errors] %>
           <% flash[:parent_errors].each do |error| %>
@@ -61,8 +63,10 @@
 
   <!--NEW TEACHER REGISTRATION-->
   <li>
-    <div class="collapsible-header center-align <% if flash[:teacher_errors] %>active
-      <% end %>">New Teacher Registration</div>
+    <div class="collapsible-header center-align
+      <% if flash[:teacher_errors] %>active
+      <% end %>">New Teacher Registration
+    </div>
     <div class="collapsible-body" style="padding:10px;">
 
       <form action="/teachers" method="post">
@@ -83,7 +87,7 @@
           <input type="password" name="teacher[password_confirmation]">
           <label>Confirm Password</label>
         </div>
-        <button class="waves-effect waves-light btn #0d47a1 blue darken-4" type="submit">Register</button>
+        <button class="waves-effect waves-light btn #0d47a1 blue darken-4" type="submit" id="teacher_register">Register</button>
       </form>
       <% if flash[:teacher_errors] %>
           <% flash[:teacher_errors].each do |error| %>

@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   root "sessions#home"
 
+  get "sessions" => "sessions#home"
   get "sessions/login"
   post "logging_in" => "sessions#logging_in"
   delete "sessions" => "sessions#destroy"
@@ -16,6 +17,8 @@ Rails.application.routes.draw do
   post "events" => "events#create"
   get "events/new" => "events#new"
   get "events/:id/edit" => "events#edit"
+  patch "events" => "events#update"
   patch "events/:id" => "events#update"
+  delete "events/:id" => "events#destroy"
 
 end

@@ -11,16 +11,17 @@ class SessionsController < ApplicationController
       if teacher.authenticate(params[:password])
         session[:teacher_id] = teacher.id
         redirect_to "/events/index"
+        return
       end
     elsif parent = Parent.find_by(email: params[:email])
       if parent.authenticate(params[:password])
         session[:parent_id] = parent.id
         redirect_to "/events/index"
+        return
       end
-    else
-      flash[:error] = "No user found"
-      redirect_to :back
     end
+    flash[:error] = "Invalid user credentials"
+    redirect_to "/"
   end
 
   def destroy

@@ -12,7 +12,7 @@
                 <table class="centered highlight bordered">
                   <thead>
                   <tr>
-                    <th data-field="item">Item</th>
+                    <th data-field="name">Item</th>
                     <th data-field="requested">Requested</th>
                     <th data-field="status">Status</th>
                   </tr>
@@ -28,6 +28,14 @@
                   </tbody>
                 </table>
               </div>
+              <form class="right-align" method="post" action="/events/<%= item[:event].id %>">
+                <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+                <input name="_method" type="hidden" value="delete" />
+                <input name="e_id" type="hidden" value="<%= item[:event].id %>" />
+                <button class="waves-effect waves-light btn #0d47a1 red darken-4" type="submit" name="action">Delete
+                  Event
+                </button>
+              </form>
             </div>
           </li>
       <% end %>
@@ -110,8 +118,9 @@
                     <thead>
                     <tr>
                       <th data-field="id">Item</th>
-                      <th data-field="name">Total needed</th>
-                      <th data-field="price">You're bringing</th>
+                      <th data-field="total">Total needed</th>
+                      <th data-field="supply">Total supplied</th>
+                      <th data-field="youbring">You're bringing</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -119,9 +128,10 @@
                         <tr>
                           <td><%= thing[:info].name %></td>
                           <td><%= thing[:info].quantity %></td>
+                          <td><%= thing[:sum] %></td>
                           <td>
                             <div class="input-field">
-                              <input class="center-align" name="[item]<%= thing[:info].id %>" value="<%= thing[:quantity] %>" type="text" style="width:25%">
+                              <input class="center-align" id="updating" name="[item]<%= thing[:info].id %>" value="<%= thing[:quantity] %>" type="text" style="width:25%">
                             </div>
                           </td>
                         </tr>

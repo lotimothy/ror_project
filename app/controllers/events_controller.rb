@@ -27,9 +27,9 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @event = Event.find(params[:id])
-    @donations = Resource.select("resources.id AS id, resources.name AS name, resources.quantity AS r_quantity, donations.parent_id AS p_id, donations.quantity AS p_quantity").joins("LEFT OUTER JOIN donations ON resources.id = donations.resource_id").where("event_id = ?", @event.id).where("p_id = ? OR p_id IS NULL", session[:parent_id])
-    @teacherview = Resource.select("resources.id AS id, resources.name AS name, resources.quantity AS total, SUM(donations.quantity) AS sofar").joins("LEFT OUTER JOIN donations ON resources.id = donations.resource_id").where("event_id = ?", @event.id).group("id")
+    # @event = Event.find(params[:id])
+    # @donations = Resource.select("resources.id AS id, resources.name AS name, resources.quantity AS r_quantity, donations.parent_id AS p_id, donations.quantity AS p_quantity").joins("LEFT OUTER JOIN donations ON resources.id = donations.resource_id").where("event_id = ?", @event.id).where("p_id = ? OR p_id IS NULL", session[:parent_id])
+    # @teacherview = Resource.select("resources.id AS id, resources.name AS name, resources.quantity AS total, SUM(donations.quantity) AS sofar").joins("LEFT OUTER JOIN donations ON resources.id = donations.resource_id").where("event_id = ?", @event.id).group("id")
   end
 
   def update
@@ -41,6 +41,12 @@ class EventsController < ApplicationController
       end
     end
     redirect_to :back
+  end
+
+  def destroy
+    event = Event.find(params[:id])
+    event.destroy
+    redirect_to "/events/index"
   end
 
   private
